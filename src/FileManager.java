@@ -1,19 +1,16 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PeopleManager {
-    private List<Person> people;
+public class FileManager {
+    private static String csvFile = "ID_list.csv";
 
-    public PeopleManager() {
-        people = new ArrayList<>();
-    }
 
-    public void readCsv(String fileName) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+    public static List<Person> readCsv() {
+        List<Person> people = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length == 3) {
@@ -27,13 +24,18 @@ public class PeopleManager {
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
-    }
-
-    public List<Person> getPeople() {
         return people;
     }
 
-    public void addPerson(Person person) {
-        people.add(person);
+
+    public static void fileWriter(String name, String surname, String dni) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(csvFile, true))) {
+            bw.write(String.join(",", name, surname, dni));
+            bw.newLine();
+        } catch (IOException e) {
+            System.out.println("Error saving score: " + e.getMessage());
+        }
     }
 }
+
+

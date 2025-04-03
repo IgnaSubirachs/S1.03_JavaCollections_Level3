@@ -2,6 +2,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+S1.03_JavaCollections_Level3.iml
 
 ### Eclipse ###
 .apt_generated

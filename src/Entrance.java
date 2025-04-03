@@ -10,41 +10,47 @@ public class Entrance {
         }
     }
 
-    public static String readString(String message) throws InvalidStringException {
-        System.out.println(message);
-        String input = sc.nextLine();
-        if (!input.matches("[A-Za-zÀ-ÖØ-öø-ÿ\\s]+")) {
-            throw new InvalidStringException();
-        } else {
-            return input;
+    public static String readString(String message) {
+        while (true) {
+            System.out.println(message);
+            String input = sc.nextLine().trim();
+            if (input.matches("[A-Za-zÀ-ÖØ-öø-ÿ\\s]+")) {
+                return input;
+            }
+                System.out.println("This is not a valid string");
+
         }
     }
-    public static String idString(String message) throws InvalidStringException {
-        System.out.println(message);
-        String input = sc.nextLine();
-        if (!input.matches("\\d{8}[A-Z]")) {
-            throw new InvalidStringException();
-        } else {
-            return input;
+
+    public static String idString(String message) {
+        while (true) {
+            System.out.println(message);
+            String input = sc.nextLine().trim();
+            if (input.matches("\\d{8}[A-Za-z]")) {
+                return input;
+
+            }
+            System.out.println("Error: ID must be a number and no more than 8 digits with one letter");
+
+
         }
     }
 
     public static byte readByte(String message) {
         byte value = 0;
-        boolean valid = false;
 
-        while (!valid) {
+        while (true) {
             try {
                 System.out.println(message);
                 value = sc.nextByte();
-                valid = true;
+                clearBuffer();
+                return value;
             } catch (InputMismatchException e) {
                 System.out.println("Error: This isn't a Byte number. Try Again.");
-                sc.nextLine(); // Clear buffer
+                clearBuffer();
             }
         }
 
-        return value;
     }
 }
 
