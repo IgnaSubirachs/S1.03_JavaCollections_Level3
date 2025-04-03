@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Menu {
 
-    public static void showMenu(PeopleManager manager) {
+    public static void showMenu(FileManager manager) {
         Scanner sc = new Scanner(System.in);
         int option;
 
@@ -23,13 +23,13 @@ public class Menu {
                     manager.addPerson(new Person(name, surname, dni));
                     System.out.println("Person added successfully.");
                 }
-                case 2 -> showSorted(manager, "name", true);
-                case 3 -> showSorted(manager, "name", false);
-                case 4 -> showSorted(manager, "surname", true);
-                case 5 -> showSorted(manager, "surname", false);
-                case 6 -> showSorted(manager, "dni", true);
-                case 7 -> showSorted(manager, "dni", false);
-                case 0 -> System.out.println("Exiting program...");
+                case 2 -> Sort.showSorted(manager, "name", true);
+                case 3 -> Sort.showSorted(manager, "name", false);
+                case 4 -> Sort.showSorted(manager, "surname", true);
+                case 5 -> Sort.showSorted(manager, "surname", false);
+                case 6 -> Sort.showSorted(manager, "dni", true);
+                case 7 -> Sort.showSorted(manager, "dni", false);
+                case 0 -> System.out.println("Exiting program, see you soon...");
                 default -> System.out.println("Invalid option.");
             }
         } while (option != 0);
@@ -47,32 +47,6 @@ public class Menu {
         System.out.println("0.- Exit.");
         System.out.print("Choose an option: ");
     }
-
-    private static void showSorted(PeopleManager manager, String field, boolean ascending) {
-        printHeader();
-
-        Comparator<Person> comparator = switch (field) {
-            case "name" -> Comparator.comparing(Person::getName, String.CASE_INSENSITIVE_ORDER);
-            case "surname" -> Comparator.comparing(Person::getSurname, String.CASE_INSENSITIVE_ORDER);
-            case "dni" -> Comparator.comparing(Person::getDni, String.CASE_INSENSITIVE_ORDER);
-            default -> null;
-        };
-
-        if (comparator == null) {
-            System.out.println("Invalid field.");
-            return;
-        }
-
-        if (!ascending) {
-            comparator = comparator.reversed();
-        }
-
-        manager.getPeople().stream()
-                .sorted(comparator)
-                .forEach(System.out::println);
-    }
-
-    private static void printHeader() {
-        System.out.printf("%-15s %-20s %-10s\n", "___Name___", "____Surname____", "__DNI__");
-    }
 }
+
+
